@@ -4,6 +4,8 @@
 
 using namespace plugin;
 
+ThiscallEvent <AddressList<0x59FE09, H_CALL>, PRIORITY_BEFORE, ArgPickN<CObject*, 0>, void(CObject*)>  objectPreRenderEvent; // compatible with SilentPatch
+
 class OpenDoorAnim
 {
 public:
@@ -21,7 +23,7 @@ public:
 		};
 		static PedExtendedData<PedExtData> pedExtData;
 
-		Events::objectRenderEvent += [](CObject *obj)
+		objectPreRenderEvent += [](CObject *obj)
 		{
 			if (obj->m_pObjectInfo->m_nSpecialColResponseCase == 6) // SWINGDOOR
 			{
