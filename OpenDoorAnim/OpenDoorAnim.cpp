@@ -40,7 +40,13 @@ public:
 							PedExtData &xdata = pedExtData.Get(ped);
 							if ((CTimer::m_snTimeInMilliseconds - xdata.animDoorLastTime) > 1700)
 							{
-								if (!ped->m_pIntelligence->GetTaskUseGun() && ped->m_fHealth > 0.0f)
+								if (!ped->m_pIntelligence->GetTaskUseGun() &&
+									!ped->m_pIntelligence->GetTaskHold(true) &&
+									!ped->m_pIntelligence->GetTaskFighting() &&
+									!ped->m_pIntelligence->GetTaskInAir() &&
+									!ped->m_pIntelligence->GetTaskDuck(true) &&
+									!ped->m_pIntelligence->GetTaskSwim() && // maybe some map mod is using doors underwater...
+									ped->m_fHealth > 0.0f)
 								{
 									Command<Commands::TASK_PLAY_ANIM_SECONDARY>(ped, "WALK_DOORPARTIAL", "PED", 4.0f, 0, 0, 0, 0, -1); // TODO improve me
 									xdata.animDoorLastTime = CTimer::m_snTimeInMilliseconds;
