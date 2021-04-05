@@ -1,6 +1,7 @@
 #include "plugin.h"
 #include "CTimer.h"
 #include "CAnimManager.h"
+#include "eAnimations.h"
 
 using namespace plugin;
 
