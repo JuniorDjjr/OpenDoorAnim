@@ -1,6 +1,7 @@
 #include "plugin.h"
 #include "CTimer.h"
-#include "extensions/ScriptCommands.h"
+#include "CAnimManager.h"
+#include "eAnimations.h"
 
 using namespace plugin;
 
@@ -48,7 +49,7 @@ public:
 									!ped->m_pIntelligence->GetTaskSwim() && // maybe some map mod is using doors underwater...
 									ped->m_fHealth > 0.0f)
 								{
-									Command<Commands::TASK_PLAY_ANIM_SECONDARY>(ped, "WALK_DOORPARTIAL", "PED", 4.0f, 0, 0, 0, 0, -1); // TODO improve me
+									CAnimManager::BlendAnimation(ped->m_pRwClump, ANIM_GROUP_DEFAULT, ANIM_DEFAULT_WALK_DOORPARTIAL, 4.0);
 									xdata.animDoorLastTime = CTimer::m_snTimeInMilliseconds;
 								}
 							}
