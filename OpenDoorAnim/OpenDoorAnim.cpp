@@ -35,11 +35,11 @@ public:
 					if (obj->m_nNumEntitiesCollided > 0)
 					{
 						CEntity *entity = obj->m_apCollidedEntities[i];
-						if (entity && entity->m_nType == ENTITY_TYPE_PED)
+						if (entity && entity->m_nType == ENTITY_TYPE_PED && DistanceBetweenPoints(entity->GetPosition(), obj->GetPosition()) < 3.0f)
 						{
 							CPed *ped = reinterpret_cast<CPed*>(entity);
 							PedExtData &xdata = pedExtData.Get(ped);
-							if ((CTimer::m_snTimeInMilliseconds - xdata.animDoorLastTime) > 1700)
+							if ((CTimer::m_snTimeInMilliseconds - xdata.animDoorLastTime) > 1700 && ped->m_nMoveState > 1)
 							{
 								if (!ped->m_pIntelligence->GetTaskUseGun() &&
 									!ped->m_pIntelligence->GetTaskHold(true) &&
@@ -47,6 +47,7 @@ public:
 									!ped->m_pIntelligence->GetTaskInAir() &&
 									!ped->m_pIntelligence->GetTaskDuck(true) &&
 									!ped->m_pIntelligence->GetTaskSwim() && // maybe some map mod is using doors underwater...
+									!ped->m_pFire &&
 									ped->m_fHealth > 0.0f)
 								{
 									CAnimManager::BlendAnimation(ped->m_pRwClump, ANIM_GROUP_DEFAULT, ANIM_DEFAULT_WALK_DOORPARTIAL, 4.0);
